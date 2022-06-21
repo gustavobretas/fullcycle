@@ -1,0 +1,8 @@
+FROM golang:1.18-alpine3.16 AS builder
+WORKDIR /usr/app
+COPY main.go /usr/app
+RUN go build /usr/app/main.go
+
+FROM scratch
+COPY --from=builder /usr/app/main /
+CMD ["./main"]
