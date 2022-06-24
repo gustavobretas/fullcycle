@@ -1,0 +1,11 @@
+# Subir os Containers
+docker-compose up
+
+# Baixar os Containers
+docker-compose down
+
+# Abrir o Bash do Container
+docker exec -it kafka_kafka_1 bash
+
+# Monitorar os chamadas
+kafka-console-consumer --bootstrap-server=localhost:9092 --topic=route.new-position
