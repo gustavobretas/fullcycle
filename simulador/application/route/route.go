@@ -66,20 +66,17 @@ func (r *Route) ExportJsonPositions() ([]string, error) {
 	var route PartialRoutePosition
 	var result []string
 	total := len(r.Positions)
-
 	for key, value := range r.Positions {
 		route.ID = r.ID
 		route.ClientID = r.ClientID
 		route.Position = []float64{value.Latitude, value.Longitude}
 		route.Finished = total-1 == key
+		jsonRoute, err := json.Marshal(route)
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, string(jsonRoute))
 	}
-
-	jsonRoute, err := json.Marshal(route)
-	if err != nil {
-		return nil, err
-	}
-
-	result = append(result, string(jsonRoute))
 
 	return result, nil
 }

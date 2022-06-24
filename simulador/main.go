@@ -1,18 +1,23 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
-	"github.com/gustavobretas/fullcycle/simulador/application/route"
+	"github.com/gustavobretas/fullcycle/simulador/infra/kafka"
+	"github.com/joho/godotenv"
 )
 
-func main() {
-	route := route.Route{
-		ID:       "1",
-		ClientID: "1",
+func init() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
-	route.LoadPositions()
-	stringjson, _ := route.ExportJsonPositions()
-	fmt.Println(stringjson[0])
+}
 
+func main() {
+	producer := kafka.NewKafkaProducer()
+	kafka.Publish("Hello Kafka!", "route.new-position", producer)
+	for {
+		_ = 1
+	}
 }
